@@ -26,12 +26,13 @@ var GeoJSONHelper = function() {
 var Map = function() {
   return {
     geocoder: new GClientGeocoder(),
-    couchUrl: "http://pdxapi.com/",
-    currentDataset: "",
+    //change url and db here...
+    couchUrl: "http://elsewise.couchone.com/",
+    currentDataset: "poetry_posts",
     fetchFeatures: function() {
       Indicator.show();
       $.ajax({
-        url: Map.couchUrl + Map.currentDataset + "/geojson",
+        url: Map.couchUrl + Map.currentDataset + "/_design/geojson/_spatial/points",
         dataType: 'jsonp',
         data: {
           "bbox": Map.container.getExtent().transform( proj900913, proj4326 ).toBBOX()
@@ -79,7 +80,7 @@ var Map = function() {
     fetchDatasetMetadata: function(dataset) {
       Map.clearMetadata(dataset);
       $.ajax({
-        url: Map.couchUrl + "pdxapi/" + Map.currentDataset,
+        url: Map.couchUrl + Map.currentDataset + "/placeholder_metadata",
         dataType: 'jsonp',
         success: function(data){
           $('#metadata').html("<h3>Dataset Metadata</h3>"+
@@ -137,7 +138,8 @@ $(function() {
           dbList.append('<li>' + database + '</li>');
         }
       });
-      $('#databases li:first').click();
+      // commented so it doesn't over-write my hardcoded database
+      //$('#databases li:first').click();
     }
   });
 
@@ -168,16 +170,16 @@ $(function() {
 
   Map.styleMap = new OpenLayers.StyleMap({
     'default': OpenLayers.Util.applyDefaults({
-      fillOpacity: 0.2, 
+      fillOpacity: 0.4, 
       strokeColor: "black", 
-      strokeWidth: 4,
-      pointRadius: 10
+      strokeWidth: 2,
+      pointRadius: 7
     }),
     'select': new OpenLayers.Style({
-      strokeColor: "#019DBE",
+      strokeColor: "#FF0000",
     }),
     'temporary': new OpenLayers.Style({
-      strokeColor: "#DE027F",
+      strokeColor: "#00FF00",
     }),
   });
 
@@ -206,7 +208,7 @@ $(function() {
 
   Map.geojson_format = new OpenLayers.Format.GeoJSON();     
 
-  Map.container.setCenter(new OpenLayers.LonLat(-122.6762071,45.5234515), 3);
+  Map.container.setCenter(new OpenLayers.LonLat(-122.6762071,45.5234515), 15); // was 3
   Map.container.events.register( 'moveend', this, function(){ Map.fetchFeatures() });
 
   if (OpenLayers.Control.MultitouchNavigation) {

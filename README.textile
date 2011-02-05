@@ -1,5 +1,5 @@
-h1. GeoBrowser
+h1. Poetry Post Browser (Based on GeoBrowser)
 
-p. Visualize geometries using opensearch compatible (?bbox=) geojson APIs using OpenLayers!
+p. Original code: https://github.com/maxogden/geobrowser
 
 
