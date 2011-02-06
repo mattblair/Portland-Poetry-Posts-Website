@@ -69,7 +69,7 @@ var Map = function() {
         dataType: 'jsonp',
         success: function(data) {
           // TODO: Format using formatting func
-          $('#metadata').html("<h3>Feature Metadata</h3>"+
+          $('#metadata').html("<h3>Poetry Post Info</h3>"+
             Map.formatMetadata(data));
         }
       });
