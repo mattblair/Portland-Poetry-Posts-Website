@@ -209,7 +209,11 @@ $(function() {
 
   Map.geojson_format = new OpenLayers.Format.GeoJSON();     
 
-  Map.container.setCenter(new OpenLayers.LonLat(-122.6762071,45.5234515), 3); // was 3, then changed to 15, but after other changes, that's way out...
+  // Changed center from -122.6762071,45.5234515 in original
+  //shouldn't this be transformed?
+  var defaultCentroid = new OpenLayers.LonLat(-122.6303,45.5232)
+  defaultCentroid.transform( proj4326, proj900913 )
+  Map.container.setCenter(defaultCentroid, 3); // was 3, then changed to 15, but after other changes, that's way out...
   Map.container.events.register( 'moveend', this, function(){ Map.fetchFeatures() });
 
   if (OpenLayers.Control.MultitouchNavigation) {
@@ -236,8 +240,8 @@ $(function() {
   $('#regions li').live('click', function(){
       var newRegion = $(this).text();
       
-      // set default values or Portland
-      var newCenter = new OpenLayers.LonLat(-122.6762071,45.5234515);
+      // set default values or Portland -- should use defaultCentroid, but that's been transformed already
+      var newCenter = new OpenLayers.LonLat(-122.6303,45.5232);
       var newZoomLevel = 12;
       // replace with conditional based on newRegion
       
