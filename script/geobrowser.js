@@ -128,6 +128,7 @@ $(function() {
   })
   
   OpenLayers.ImgPath="themes/dark/"
+  /*
   $.ajax({
     url: "http://maxogden.couchone.com/_all_dbs",
     dataType: 'jsonp',
@@ -141,7 +142,7 @@ $(function() {
       // commented so it doesn't over-write my hardcoded database
       //$('#databases li:first').click();
     }
-  });
+  });*/
 
   proj900913 = new OpenLayers.Projection("EPSG:900913"); //Spherical mercator used for google maps
   proj4326 = new OpenLayers.Projection("EPSG:4326"); 
@@ -165,7 +166,7 @@ $(function() {
     ]
   };
   Map.container = new OpenLayers.Map('map', Map.options);
-  Map.gmap = new OpenLayers.Layer.Google("Google Streets", {"sphericalMercator": true, MIN_ZOOM_LEVEL: 14, MAX_ZOOM_LEVEL: 21}); 
+  Map.gmap = new OpenLayers.Layer.Google("Google Streets", {"sphericalMercator": true, MIN_ZOOM_LEVEL: 10, MAX_ZOOM_LEVEL: 18}); // min was 14, max was 21
   Map.container.addLayer(Map.gmap);
 
   Map.styleMap = new OpenLayers.StyleMap({
@@ -208,15 +209,20 @@ $(function() {
 
   Map.geojson_format = new OpenLayers.Format.GeoJSON();     
 
-  Map.container.setCenter(new OpenLayers.LonLat(-122.6762071,45.5234515), 15); // was 3
+  Map.container.setCenter(new OpenLayers.LonLat(-122.6762071,45.5234515), 3); // was 3, then changed to 15, but after other changes, that's way out...
   Map.container.events.register( 'moveend', this, function(){ Map.fetchFeatures() });
 
   if (OpenLayers.Control.MultitouchNavigation) {
     var touchControl = new OpenLayers.Control.MultitouchNavigation();
     Map.container.addControl(touchControl);
   }
+
+  // fetch after everything else is set up...
+  Map.fetchFeatures();
+
   
-  
+  // removing database click list
+  /*
   $('#databases li').live('click', function(){
     var dataset = $(this).text();
     $('.selected').removeClass('selected');
@@ -224,5 +230,50 @@ $(function() {
     Map.currentDataset = dataset;
     Map.fetchDatasetMetadata(dataset);
     Map.fetchFeatures();
-  });
+  });*/
+  
+  // based on database click list:
+  $('#regions li').live('click', function(){
+      var newRegion = $(this).text();
+      
+      // set default values or Portland
+      var newCenter = new OpenLayers.LonLat(-122.6762071,45.5234515);
+      var newZoomLevel = 12;
+      // replace with conditional based on newRegion
+      
+      if (newRegion == 'Irvington') {      
+          // Irvington Centroid:  -122.650253, 45.541930
+          newCenter = new OpenLayers.LonLat(-122.650253, 45.541930);
+          newZoomLevel = 3; // was 20
+      }
+      
+      // Grant Park Centroid: -122.62588, 45.54250
+      if (newRegion == 'Grant Park') {
+          newCenter = new OpenLayers.LonLat(-122.62588, 45.54250);
+          newZoomLevel = 17;
+      }
+      
+      // Mount Tabor Centroid: -122.59425, 45.51208
+      if (newRegion == 'Mount Tabor') {
+          newCenter = new OpenLayers.LonLat(-122.59425, 45.51208);
+          newZoomLevel = 17;
+      }
+      
+      // Westside Centroid: -122.696431, 45.522983
+      if (newRegion == 'Westside') {
+          newCenter = new OpenLayers.LonLat(-122.696431, 45.522983);
+          newZoomLevel = 17;
+      }
+      
+      // Southeast Centroid?
+      
+      
+      // values need to be transformed to the maps's projection
+      newCenter.transform( proj4326, proj900913 )
+      Map.container.setCenter(newCenter, newZoomLevel); // was hard-coded to 16
+      
+      // refresh the points for the new area
+      Map.fetchFeatures();
+    });
+  
 });

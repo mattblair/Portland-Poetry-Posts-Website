@@ -7,6 +7,7 @@
 #sidebar {width: 25%; height: 100%; float: right; overflow: auto;}
 #databases { list-style-type: none;}
 #databases li:hover { font-weight: bold; cursor: pointer; cursor: hand;}
+#regions li:hover { font-weight: bold; cursor: pointer; cursor: hand;}
 #loader { position: absolute; display: none; z-index: 666; }
 form {padding: 0; margin: 0;}
 .selected {font-weight: bold; color: #019DBE;}
