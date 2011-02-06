@@ -45,21 +45,20 @@ var Map = function() {
       })
     },
     formatMetadata: function(data) {
-      out = '<dl>';
-      $.each(data, function(key, val) {
-        if (typeof(val) == 'string' && key[0] != '_') {
-          out = out + '<dt>' + key + '<dd>' + val;
-        } else if (typeof(val) == 'object' && key != "geometry" && val != null) {
-          if (key == 'properties') {
-            $.each(val, function(attr, value){
-              out = out + '<dt>' + attr + '<dd>' + value;
-            })
-          } else {
-            out = out + '<dt>' + key + '<dd>' + val.join(', ');
-          }
-        }
-      });
-      out = out + '</dl>';
+      
+      //out = '<img src="http://elsewise.couchone.com/poetry_posts/b916e524b2e1f24e72ac7a81aa4c34ca/1924NE36th-lf.jpg" /> ';
+      if (data.imageURL) { // add image tag here...
+          out = '<img id="postphoto" src="' + data.imageURL + '" /> ';
+      } else {
+          out = '<p>(No image yet...)</p>';
+      }
+      out = out + '<p id="address">' + data.addr1 + ' <br />';
+      out = out + data.city + ', ' + data.state + ' ' + data.zip + '</p>';
+      // check for null
+      if (data.tipsForFinding) {
+          out = out + '<p><strong>How to find it:</strong> ' + data.tipsForFinding + '</p>';
+      }
+      out = out + '<p id="last-updated"><em>Last Updated: ' + data.dateModified + '</em></p>';
       return out;
     },
     fetchFeatureMetadata: function(feature) {
