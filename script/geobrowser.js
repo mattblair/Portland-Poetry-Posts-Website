@@ -175,16 +175,37 @@ $(function() {
 
   Map.styleMap = new OpenLayers.StyleMap({
     'default': OpenLayers.Util.applyDefaults({
-      fillOpacity: 0.2, 
+      /*fillOpacity: 0.2, 
       strokeColor: "#74337A", 
       strokeWidth: 1,
-      pointRadius: 6
+      pointRadius: 6,*/
+      graphic: true,
+      externalGraphic: "http://poetrybox.info/images/post-icon-whitefill.png",
+      graphicOpactiy: 1,
+      graphicXOffset: -15,
+      graphicYOffset: -25,
+      graphicWidth: 30,
+      graphicHeight: 30
     }),
     'select': new OpenLayers.Style({
-      strokeColor: "#6699FF",
+      //strokeColor: "#6699FF",
+      graphic: true,
+      externalGraphic: "http://poetrybox.info/images/post-icon-greenfill.png",
+      graphicOpactiy: 1,
+      graphicXOffset: -15,
+      graphicYOffset: -25,
+      graphicWidth: 30,
+      graphicHeight: 30
     }),
     'temporary': new OpenLayers.Style({
-      strokeColor: "#99FF99",
+      //strokeColor: "#99FF99",
+      graphic: true,
+      externalGraphic: "http://poetrybox.info/images/post-icon.png",
+      graphicOpactiy: 1,
+      graphicXOffset: -15,
+      graphicYOffset: -25,
+      graphicWidth: 30,
+      graphicHeight: 30
     }),
   });
 
