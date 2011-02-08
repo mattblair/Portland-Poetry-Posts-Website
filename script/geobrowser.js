@@ -49,6 +49,9 @@ var Map = function() {
       //out = '<img src="http://elsewise.couchone.com/poetry_posts/b916e524b2e1f24e72ac7a81aa4c34ca/1924NE36th-lf.jpg" /> ';
       if (data.imageURL) { // add image tag here...
           out = '<img id="postphoto" src="' + data.imageURL + '" /> ';
+          /*if (data.photoCredit) {
+              out = out + '<p id="photocredit">Photo by ' + data.photoCredit '</p>';
+          }*/
       } else {
           out = '<p>(No image yet...)</p>';
       }
@@ -68,13 +71,15 @@ var Map = function() {
         dataType: 'jsonp',
         success: function(data) {
           // TODO: Format using formatting func
+          $('#metadata').fadeOut('fast');
           $('#metadata').html("<h3>About This Post</h3>"+
             Map.formatMetadata(data));
+          $('#metadata').fadeIn('300');
         }
       });
     },
     clearMetadata: function(arg) {
-      $('#metadata').html('');
+      $('#metadata').html('<h3 id="choose-note">(Select a post...)</h3>');
     },
     fetchDatasetMetadata: function(dataset) {
       Map.clearMetadata(dataset);
@@ -170,16 +175,16 @@ $(function() {
 
   Map.styleMap = new OpenLayers.StyleMap({
     'default': OpenLayers.Util.applyDefaults({
-      fillOpacity: 0.4, 
-      strokeColor: "black", 
-      strokeWidth: 2,
-      pointRadius: 7
+      fillOpacity: 0.2, 
+      strokeColor: "#74337A", 
+      strokeWidth: 1,
+      pointRadius: 6
     }),
     'select': new OpenLayers.Style({
-      strokeColor: "#FF0000",
+      strokeColor: "#6699FF",
     }),
     'temporary': new OpenLayers.Style({
-      strokeColor: "#00FF00",
+      strokeColor: "#99FF99",
     }),
   });
 
