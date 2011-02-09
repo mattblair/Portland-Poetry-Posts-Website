@@ -287,47 +287,8 @@ $(function() {
   
   // based on database click list:
   $('#regions li').live('click', function(){
+
       var newRegion = $(this).text();
-      
-      // using switch instead -- these zoom levels are so erratic
-      /*
-      // set default values or Portland -- should use defaultCentroid, but that's been transformed already
-      var newCenter = new OpenLayers.LonLat(-122.6303,45.5232);
-      var newZoomLevel = 3;
-      // replace with conditional based on newRegion
-      
-      if (newRegion == 'Irvington') {      
-          // Irvington Centroid:  -122.650253, 45.541930
-          newCenter = new OpenLayers.LonLat(-122.650253, 45.541930);
-          newZoomLevel = 20; // was 3
-      }
-      
-      // Grant Park Centroid: -122.62588, 45.54250
-      if (newRegion == 'Grant Park') {
-          newCenter = new OpenLayers.LonLat(-122.62588, 45.54250);
-          newZoomLevel = 17;
-      }
-      
-      // Mount Tabor Centroid: -122.59425, 45.51208
-      if (newRegion == 'Mount Tabor') {
-          newCenter = new OpenLayers.LonLat(-122.59425, 45.51208);
-          newZoomLevel = 17;
-      }
-      
-      // Westside Centroid: -122.696431, 45.522983
-      if (newRegion == 'Westside') {
-          newCenter = new OpenLayers.LonLat(-122.696431, 45.522983);
-          newZoomLevel = 17;
-      }
-      
-      // Southeast Centroid?
-      
-      
-      // values need to be transformed to the maps's projection
-      newCenter.transform( proj4326, proj900913 )
-      Map.container.setCenter(newCenter, newZoomLevel); // was hard-coded to 16
-      
-      */
 
       // init defaults
       var zoomViewDelta = 0.01;
@@ -335,14 +296,7 @@ $(function() {
       
       switch (newRegion) {
          case 'Irvington': 
-           // Irvington Centroid:  -122.650253, 45.541930, deltas: 0.02
            areaCentroid = new OpenLayers.LonLat(-122.650253,45.541930);
-          //var irvingtonLL = new OpenLayers.LonLat(-122.650253 - zoomViewDelta,45.541930 - zoomViewDelta);
-          //var irvingtonUR = new OpenLayers.LonLat(-122.650253 + zoomViewDelta,45.541930 + zoomViewDelta);
-          //irvingtonLL.transform( proj4326, proj900913 ); // happens in-place
-          //irvingtonUR.transform( proj4326, proj900913 );
-          //var irvingtonExtent = new OpenLayers.Bounds(irvingtonLL.lon, irvingtonLL.lat, irvingtonUR.lon, irvingtonUR.lat );
-          //Map.container.zoomToExtent(irvingtonExtent);
            break;
          case 'Grant Park':
            areaCentroid = new OpenLayers.LonLat(-122.62588, 45.54250);
@@ -353,13 +307,13 @@ $(function() {
            break;
          case 'Westside':
            areaCentroid = new OpenLayers.LonLat(-122.696431, 45.522983);
-           zoomViewDelta = 0.017;
+           zoomViewDelta = 0.014; // what I want is between zoom levels. 0.012 is too close, this is to wide.
            break;  
          default:  // All of Portland
            // too wide
            //Map.container.zoomToMaxExtent(); 
            areaCentroid = new OpenLayers.LonLat(-122.6303,45.5232);
-           zoomViewDelta = 0.06; // use same value for both?
+           zoomViewDelta = 0.07; 
            break;
       }
         
