@@ -51,12 +51,12 @@ var Map = function() {
       
       //out = '<img src="http://elsewise.couchone.com/poetry_posts/b916e524b2e1f24e72ac7a81aa4c34ca/1924NE36th-lf.jpg" /> ';
       if (data.imageURL) { // add image tag here...
-          out = '<img id="postphoto" src="' + data.imageURL + '" /> ';
+          out = '<img id="postphoto" src="' + data.imageURL + '" /> <p id="photocredit">Photo by ' + data.photoCredit + '</p>';
           /*if (data.photoCredit) {
               out = out + '<p id="photocredit">Photo by ' + data.photoCredit '</p>';
           }*/
       } else {
-          out = '<p>(No image yet...)</p>';
+          out = '<p id="nophoto">(No image yet...)</p>';
       }
       out = out + '<p id="address">' + data.addr1 + ' <br />';
       out = out + data.city + ', ' + data.state + ' ' + data.zip + '</p>';
@@ -82,7 +82,8 @@ var Map = function() {
       });
     },
     clearMetadata: function(arg) {
-      $('#metadata').html('<h3 id="choose-note">(Select a post...)</h3>');
+      //$('#metadata').html('<h3 id="choose-note">(Select a post...)</h3>');
+      $('#metadata').fadeOut('slow');
     },
     fetchDatasetMetadata: function(dataset) {
       Map.clearMetadata(dataset);
