@@ -2,9 +2,11 @@
 
 #sidebar {width: 25%; height: 100%; float: right; overflow: auto;}
 
-#menu { height: 40%; overflow: auto; background:#fff;}
+#menu {overflow: auto; background:#fff;}
 
 h1 {font-size: 18px; padding: 10px; margin: 0; background:#fff; color:#000; text-align:center; }
+
+h1 a {text-decoration: none;}
 
 #tagline { font-size:12px; padding: 5px; text-align:center; background:#73393A; color:#fff; margin: 0; }
 
@@ -12,7 +14,7 @@ h1 {font-size: 18px; padding: 10px; margin: 0; background:#fff; color:#000; text
 
 #regions { list-style-type: none;}
 #regions li {margin-top:0.3em;}
-#regions li:hover { font-weight: bold; cursor: pointer; cursor: hand; background:#ddd;}
+#regions li:hover {cursor: hand; background:#EDE6DC;}
 
 
 
@@ -20,7 +22,7 @@ h1 {font-size: 18px; padding: 10px; margin: 0; background:#fff; color:#000; text
 
 /* Lower Right: Post Details */
 
-#metadata { height: 50%; overflow: auto; padding: 20px; background:#EDE6DC; border: 8px solid #73393A;}
+#metadata {overflow: auto; padding: 20px; background:#EDE6DC; border: 8px solid #73393A;}
 
 h3 {font-size: 16px; padding: 0; margin: 0;}
 #postphoto { height: 240px; width: 180px; margin-top:10px;}
