@@ -326,6 +326,9 @@ $(function() {
       var newAreaExtent = new OpenLayers.Bounds(areaLL.lon, areaLL.lat, areaUR.lon, areaUR.lat );
       Map.container.zoomToExtent(newAreaExtent);
       
+      // clear specific information about a post
+      Map.clearMetadata();
+      
       // refresh the points for the new area
       Map.fetchFeatures();
     });
