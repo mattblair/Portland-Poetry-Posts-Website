@@ -10,7 +10,7 @@ h1 a {text-decoration: none;}
 
 #tagline { font-size:12px; padding: 5px; text-align:center; background:#73393A; color:#fff; margin: 0; }
 
-#instructions {padding-left: 10px; font-size: 12px;}
+#instructions {padding: 15px; font-size: 12px;}
 
 #regions { list-style-type: none;}
 #regions li {margin-top:0.3em;}

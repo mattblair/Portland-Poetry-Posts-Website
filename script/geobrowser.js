@@ -68,13 +68,15 @@ var Map = function() {
       return out;
     },
     fetchFeatureMetadata: function(feature) {
-      Map.clearMetadata(feature);
+      // all we really want here is the fade...
+      //Map.clearMetadata(feature);
+      $('#metadata').fadeOut('slow');
       $.ajax({
         url: Map.couchUrl + Map.currentDataset + "/" + feature.attributes.id,
         dataType: 'jsonp',
         success: function(data) {
-          // TODO: Format using formatting func
-          $('#metadata').fadeOut('fast');
+          //already faded in clearMetaData, so don't fade again after arrival
+          //$('#metadata').fadeOut('fast'); 
           $('#metadata').html("<h3>About This Post</h3>"+
             Map.formatMetadata(data));
           $('#metadata').fadeIn('300');
@@ -85,6 +87,7 @@ var Map = function() {
       //$('#metadata').html('<h3 id="choose-note">(Select a post...)</h3>');
       $('#metadata').fadeOut('slow');
     },
+    /*
     fetchDatasetMetadata: function(dataset) {
       Map.clearMetadata(dataset);
       $.ajax({
@@ -97,6 +100,7 @@ var Map = function() {
         }
       });
     },
+    */
 
     drawFeature: function(features) {
       $.each(features, function(idx, item) {
@@ -271,6 +275,9 @@ $(function() {
     Map.container.addControl(touchControl);
   }
 
+  // don't want an empty metadata box
+  Map.clearMetadata();
+  
   // fetch after everything else is set up...
   Map.fetchFeatures();
 
