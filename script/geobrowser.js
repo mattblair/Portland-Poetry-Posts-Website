@@ -26,7 +26,7 @@ var GeoJSONHelper = function() {
 var Map = function() {
   return {
     geocoder: new GClientGeocoder(),
-    //change url and db here...
+    //changed url and db here...
     couchUrl: "http://elsewise.couchone.com/",
     currentDataset: "poetry_posts",
     fetchFeatures: function() {
@@ -49,7 +49,7 @@ var Map = function() {
     },
     formatMetadata: function(data) {
       
-      //out = '<img src="http://elsewise.couchone.com/poetry_posts/b916e524b2e1f24e72ac7a81aa4c34ca/1924NE36th-lf.jpg" /> ';
+      //Example: out = '<img src="http://elsewise.couchone.com/poetry_posts/b916e524b2e1f24e72ac7a81aa4c34ca/1924NE36th-lf.jpg" /> ';
       if (data.imageURL) { // add image tag here...
           out = '<img id="postphoto" src="' + data.imageURL + '" /> <p id="photocredit">Photo by ' + data.photoCredit + '</p>';
           /*if (data.photoCredit) {
@@ -68,8 +68,8 @@ var Map = function() {
       return out;
     },
     fetchFeatureMetadata: function(feature) {
-      // all we really want here is the fade...
-      //Map.clearMetadata(feature);
+      // All we really want here is the fade...
+      // Map.clearMetadata(feature);
       $('#metadata').fadeOut('slow');
       $.ajax({
         url: Map.couchUrl + Map.currentDataset + "/" + feature.attributes.id,
@@ -140,6 +140,7 @@ $(function() {
   })
   
   OpenLayers.ImgPath="themes/dark/"
+  // don't need database list
   /*
   $.ajax({
     url: "http://maxogden.couchone.com/_all_dbs",
@@ -167,8 +168,8 @@ $(function() {
   var pdxCentroidRaw = new OpenLayers.LonLat(centerLatitude, centerLongitude);
   var pdxCentroidTransformed = pdxCentroidRaw.clone();
   pdxCentroidTransformed.transform( proj4326, proj900913 ); // for use later
-  // 0.03 != 15 miles! 
-  //In this area, 0.03 degrees of latitude is about 2.1 miles, 0.03 of long is about 1.5 miles
+  // NOTE: 0.03 != 15 miles! 
+  // In this area, 0.03 degrees of latitude is about 2.1 miles, 0.03 of longitude is about 1.5 miles
   // this would yield a very small restrictedExtent, which is why you keep bumping up against the edges.
   /*
   var fifteenMiles = 0.03; 
@@ -179,7 +180,7 @@ $(function() {
   // Lower Left: -122.736635, 45.475418
   // Upper Right: -122.549402, 45.566659
   
-  // so they can be adjusted independently
+  // Replacing fifteenMiles with two variables so they can be adjusted independently:
   var latitudeDelta = 0.1;
   var longitudeDelta = 0.12;
   var pdxLL = new OpenLayers.LonLat(centerLongitude - longitudeDelta, centerLatitude - latitudeDelta);
@@ -204,10 +205,6 @@ $(function() {
 
   Map.styleMap = new OpenLayers.StyleMap({
     'default': OpenLayers.Util.applyDefaults({
-      /*fillOpacity: 0.2, 
-      strokeColor: "#74337A", 
-      strokeWidth: 1,
-      pointRadius: 6,*/
       graphic: true,
       externalGraphic: "http://poetrybox.info/images/post-icon-whitefill.png",
       graphicOpactiy: 1,
@@ -217,7 +214,6 @@ $(function() {
       graphicHeight: 30
     }),
     'select': new OpenLayers.Style({
-      //strokeColor: "#6699FF",
       graphic: true,
       externalGraphic: "http://poetrybox.info/images/post-icon-greenfill.png",
       graphicOpactiy: 1,
@@ -227,7 +223,6 @@ $(function() {
       graphicHeight: 30
     }),
     'temporary': new OpenLayers.Style({
-      //strokeColor: "#99FF99",
       graphic: true,
       externalGraphic: "http://poetrybox.info/images/post-icon.png",
       graphicOpactiy: 1,
@@ -264,7 +259,7 @@ $(function() {
   Map.geojson_format = new OpenLayers.Format.GeoJSON();     
 
   // Changed center from -122.6762071,45.5234515 in original
-  //shouldn't this be transformed?
+  // shouldn't this be transformed?
   var defaultCentroid = new OpenLayers.LonLat(-122.6303,45.5232)
   defaultCentroid.transform( proj4326, proj900913 )
   Map.container.setCenter(defaultCentroid, 3); // was 3, then changed to 15, but after other changes, that's way out...
@@ -282,7 +277,7 @@ $(function() {
   Map.fetchFeatures();
 
   
-  // removing database click list
+  // don't want to show a database list
   /*
   $('#databases li').live('click', function(){
     var dataset = $(this).text();
@@ -293,7 +288,7 @@ $(function() {
     Map.fetchFeatures();
   });*/
   
-  // based on database click list:
+  // Instead, a region list based on database list:
   $('#regions li').live('click', function(){
 
       var newRegion = $(this).text();
@@ -315,11 +310,11 @@ $(function() {
            break;
          case 'Westside':
            areaCentroid = new OpenLayers.LonLat(-122.696431, 45.522983);
-           zoomViewDelta = 0.014; // what I want is between zoom levels. 0.012 is too close, this is to wide.
+           zoomViewDelta = 0.014; // What I want is between zoom levels. 0.012 is too close, this is to wide.
            break;  
          default:  // All of Portland
            // too wide
-           //Map.container.zoomToMaxExtent(); 
+           // Map.container.zoomToMaxExtent(); 
            areaCentroid = new OpenLayers.LonLat(-122.6303,45.5232);
            zoomViewDelta = 0.07; 
            break;

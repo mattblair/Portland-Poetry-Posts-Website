@@ -1,5 +1,0 @@
-h1. Poetry Post Browser (Based on GeoBrowser)
-
-p. Original code: https://github.com/maxogden/geobrowser
-
-
