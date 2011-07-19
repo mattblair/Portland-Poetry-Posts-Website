@@ -28,7 +28,7 @@ var Map = function() {
     geocoder: new GClientGeocoder(),
     //changed url and db here...
     couchUrl: "http://elsewise.couchone.com/",
-    currentDataset: "poetry_posts",
+    currentDataset: "poetry_posts110718",
     fetchFeatures: function() {
       Indicator.show();
       // for debugging only!!!
